@@ -4,6 +4,10 @@ const MongoProductManager = require('../dao/mongo/mongoProductManager')
 const MongoCartManager = require('../dao/mongo/mongoCartManager')
 const chatModel = require('../models/chat')
 
+const User = require('../models/user.models')
+const { userIsLoggedIn, userIsNotLoggedIn } = require('../middleware/auth.middleware')
+
+
 const mongoProductManager = new MongoProductManager()
 const mongoCartManager = new MongoCartManager()
 
@@ -55,7 +59,6 @@ route.get('/carts/:cid', async (req, res)=>{
     }
 })
 
-
 route.get('/realTimeProducts', async (__, res) => {
     try {
 
@@ -74,5 +77,46 @@ route.get('/realTimeProducts', async (__, res) => {
 route.get('/chat', (req, res) => {
     res.render('chat')
 })
+
+route.get('/', (req, res) => {
+
+    const isLoggedIn = ![null, undefined].includes(req.session.user)
+
+    res.render('firtspg', {
+        title: 'Home',
+        isLoggedIn,
+        isNotLoggedIn: !isLoggedIn,
+    })
+})
+
+route.get('/login', (_, res) => {
+    // TODO: agregar middleware, sólo se puede acceder si no está logueado
+    res.render('login', {
+        title: 'Login'
+    })
+})
+
+route.get('/register', (_, res) => {
+    // TODO: agregar middleware, sólo se puede acceder si no está logueado
+    res.render('register', {
+        title: 'Register'
+    })
+})
+
+route.get('/profile', (_, res) => {
+    // TODO: agregar middleware, sólo se puede acceder si está logueado
+    // TODO: mostrar los datos del usuario actualmente loggeado, en vez de los fake
+    res.render('profile', {
+        title: 'My profile',
+        user: {
+            firstName: 'Luke',
+            lastName: 'SkyWalker',
+            age: 33,
+            email: 'luke@gmail.com'
+        }
+    })
+})
+
+
 
 module.exports = route;
