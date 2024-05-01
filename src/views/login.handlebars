@@ -1,11 +1,18 @@
-<div>
-    <form action="/api/sessions/login" method="post" enctype="application/x-www-form-urlencoded">
-        <label for="_email">Email:</label>
-        <input type="email" name="email" id="_email" />
+<div class="background">
+    <div class="formContainer">
+        <h2>Inicia Sesion</h2>
 
-        <label for="_pass">Password:</label>
-        <input type="password" name="password" id="_pass"/>
+        <form action="auth/login" method="post" class="form">
+            <p class="text">Email</p>
+            <input type="text" name="username" id="email" class="input" placeholder="user@gmail.com">
 
-        <button type="submit">Login</button>
-    </form>
+            <p class="text">Password</p>
+            <input type="text" name="password" id="password" class="input" placeholder="************">
+
+            <button type="submit" id="btn" class="btn">Iniciar Sesión</button>
+           
+        </form>
+    </div>
 </div>
+
+<script src="/public/js/login.js"></script>

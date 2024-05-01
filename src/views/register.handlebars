@@ -1,20 +1,27 @@
-<div>
-    <form action="/api/sessions/register" method="post" enctype="application/x-www-form-urlencoded">
-        <label for="_f_name">First name:</label>
-        <input type="text" name="firstName" id="_f_name" />
+<div class="background">
+    <div class="formContainer">
+        <h2>Registro</h2>
 
-        <label for="_l_name">Last name:</label>
-        <input type="text" name="lastName" id="_l_name" />
+        <form action="register" method="post" class="form">
 
-        <label for="_age">Age:</label>
-        <input type="number" name="age" id="_age" />
+            <p class="text">Nombre</p>
+            <input type="text" name="first_name" id="email" class="input" placeholder="Tu nombre">
 
-        <label for="_email">Email:</label>
-        <input type="email" name="email" id="_email" />
+            <p class="text">Apellido</p>
+            <input type="text" name="last_name" id="email" class="input" placeholder="Tu apellido">
 
-        <label for="_pass">Password:</label>
-        <input type="password" name="password" id="_pass" />
+            <p class="text">Edad</p>
+            <input type="text" name="age" id="email" class="input" placeholder="18">
 
-        <button type="submit">Register</button>
-    </form>
+            <p class="text">Email</p>
+            <input type="text" name="email" id="email" class="input" placeholder="user@gmail.com">
+
+            <p class="text">Password</p>
+            <input type="text" name="password" id="password" class="input" placeholder="************">
+
+            <button type="submit" id="btn" class="btn">Registrarse</button>
+        </form>
+    </div>
 </div>
+
+<script src="/public/js/login.js"></script>

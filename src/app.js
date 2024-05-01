@@ -1,10 +1,11 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
+const session = require('express-session')
 
 const productRouter = require('./routes/products.router')
 const cartsRouter = require('./routes/carts.router')
 const viewsRouter = require('./routes/views.router')
-const sessionRouter = require('./routes/session.router')
+const loginRouter = require('./routes/login.router')
 
 const ProductManager = require('./dao/fileSystem/productmanager')
 const MongoProductManager = require('./dao/mongo/mongoProductManager')
@@ -13,18 +14,12 @@ const { Server, Socket } = require('socket.io')
 const dbConnection = require('./config/dbConnection')
 const chatModel = require('./models/chat')
 
-const sessionMiddleware = require('./session/mongoStorage')
-
 const productManager = new ProductManager()
 const mongoProductManager = new MongoProductManager()
-
-
 
 const app = express()
 
 dbConnection()
-
-app.use(sessionMiddleware)
 
 //configurar handlebars
 app.engine('handlebars', handlebars.engine())
@@ -38,11 +33,14 @@ app.use(express.static(`${__dirname}/./public`))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-
-
+app.use(session({
+    secret: 'secretCoder',
+    resave: true,
+    saveUninitialized: true
+}))
 
 app.use('/', viewsRouter)
-app.use('/api/sessions', sessionRouter)
+app.use('/auth', loginRouter)
 app.use('/api/products', productRouter)
 app.use('/api/carts', cartsRouter)
 
