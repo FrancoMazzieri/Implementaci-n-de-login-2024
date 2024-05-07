@@ -1,7 +1,9 @@
 const { Router } = require('express')
 const userVali = require('../middleware/userValidation')
 const MongoUserManager = require('../dao/mongo/MongoUserManager')
-const bcrypt = require('../ultis/bcrypt.js')
+const Bcrypt = require('../ultis/bcrypt.js')
+
+
 
 const router = Router()
 
@@ -26,9 +28,9 @@ router.post('/login', async (req, res) => {
             res.send({status: 'error', message: 'Usuario no existe'})
         }
 
-        if(!bcrypt.isValidPassword(user, password)){
+        /*if(!Bcrypt.isValidPassword(user, password)){
             res.send({status: 'error', message: 'Contraseña incorrecta'})
-        }
+        }*/
 
         if (username !== 'adminCoder@coder.com' || password !== 'adminCod3r123') {
             req.session.user = username
@@ -61,7 +63,7 @@ router.post('/logout', async (req, res) => {
 
 router.post('/register', userVali, async (req, res)=>{
     const { first_name, last_name, age, roll = 'user', email, password } = req.body
-    let user = { first_name, last_name, age, roll, email, password: bcrypt.createHash(password) }
+    let user = { first_name, last_name, age, roll, email, password: Bcrypt.createHash(password) }
 
     try {
         let exist = await mongoUserManager.getUser(email)
